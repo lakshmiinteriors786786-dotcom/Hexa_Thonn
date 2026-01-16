@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xchange | Digital Skill Barter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="auth-overlay" class="auth-overlay">
+        <div class="auth-box">
+            <h2 class="auth-logo">Xchange <span class="beta">BETA</span></h2>
+            
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <div id="login-form" class="form-section">
+                <div class="social-login">
+                    <button class="btn-social google" onclick="mockSocialLogin('Google')">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button class="btn-social linkedin" onclick="mockSocialLogin('LinkedIn')">
+                        <i class="fab fa-linkedin-in"></i> LinkedIn
+                    </button>
+                </div>
+
+                <div class="divider"><span>OR</span></div>
+
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="login-id" placeholder="User ID (e.g., KrishAbes)">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="login-pass" placeholder="Password">
+                </div>
+                <p id="login-error" class="error-msg"></p>
+                <button class="btn-primary full-width" onclick="validateLogin()">Login to Dashboard</button>
+            </div>
+
+            <div id="register-form" class="form-section hidden">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Create User ID">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="College Email">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Create Password">
+                </div>
+                <p class="error-msg" style="color: var(--secondary);">* Registration closed for Hackathon Finals</p>
+                <button class="btn-primary full-width" disabled style="opacity: 0.5; cursor: not-allowed;">Create Account</button>
+                
+                <p class="switch-link" onclick="switchTab('login')">Already have an ID? <span>Login here</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-app" class="blur-content">
+        <nav>
+            <div class="logo">Xchange <span class="beta">BETA</span></div>
+            <div class="user-stats">
+                <span class="balance-label">Your Wallet:</span>
+                <span class="coin-display"><i class="fas fa-coins"></i> <span id="user-balance">10.0</span> X-Coins</span>
+                <button class="btn-login" id="profile-name">Guest</button>
+                <button class="btn-logout" onclick="logout()" title="Logout / Switch Account">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </nav>
+
+        <header class="hero">
+            <div class="hero-content">
+                <h1>Your Time is the New <span class="highlight">Currency</span></h1>
+                <p>The first digital barter system for skills. Teach to Earn. Learn to Grow.</p>
+                <div class="hero-btns">
+                    <button class="btn-primary" onclick="scrollToSection('market')">Start Exchanging</button>
+                    <button class="btn-secondary" onclick="scrollToSection('economy')">How it Works</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="exchange-icon">
+                    <i class="fas fa-code"></i>
+                    <i class="fas fa-exchange-alt"></i>
+                    <i class="fas fa-guitar"></i>
+                </div>
+            </div>
+        </header>
+
+        <section id="market" class="market-section">
+            <h2>Live Skill Market</h2>
+            <p class="subtitle">Prices update based on real-time demand.</p>
+            
+            <div class="toggle-container">
+                <button class="toggle-btn active" id="learn-btn" onclick="setMode('learn')">I want to LEARN</button>
+                <button class="toggle-btn" id="teach-btn" onclick="setMode('teach')">I want to TEACH</button>
+            </div>
+
+            <div class="cards-container">
+                <div class="card high-demand">
+                    <div class="badge">🔥 High Demand</div>
+                    <div class="icon"><i class="fab fa-python"></i></div>
+                    <h3>Python Programming</h3>
+                    <p>Master backend logic and data science.</p>
+                    <div class="price-tag">
+                        <span class="cost" id="python-price">- 2.0</span> 
+                        <span class="unit">X-Coins/hr</span>
+                    </div>
+                    <button class="action-btn" onclick="transact('Python', 2, 3)">Confirm</button>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-music"></i></div>
+                    <h3>Piano & Theory</h3>
+                    <p>Learn chords and classical basics.</p>
+                    <div class="price-tag">
+                        <span class="cost" id="piano-price">- 1.0</span> 
+                        <span class="unit">X-Coins/hr</span>
+                    </div>
+                    <button class="action-btn" onclick="transact('Piano', 1, 1.5)">Confirm</button>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-language"></i></div>
+                    <h3>French Language</h3>
+                    <p>Conversational French for beginners.</p>
+                    <div class="price-tag">
+                        <span class="cost" id="french-price">- 1.5</span> 
+                        <span class="unit">X-Coins/hr</span>
+                    </div>
+                    <button class="action-btn" onclick="transact('French', 1.5, 2)">Confirm</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="economy" class="economy-section">
+            <h2>The X-Economy</h2>
+            <div class="econ-grid">
+                <div class="econ-card buy">
+                    <h3>Lazy Learner?</h3>
+                    <p>Don't want to teach? Buy X-Coins instantly.</p>
+                    <div class="calc-box">
+                        <label>Buy X-Coins:</label>
+                        <input type="number" id="buy-input" value="1" min="1" oninput="calcBuy()">
+                        <p class="result">Cost: ₹<span id="buy-cost">50</span></p>
+                        <button class="btn-buy" onclick="buyCoins()">Buy Now</button>
+                    </div>
+                </div>
+                <div class="econ-card redeem">
+                    <h3>Expert Mentor?</h3>
+                    <p>Cash out your hard-earned teaching points.</p>
+                    <div class="calc-box">
+                        <label>Redeem X-Coins:</label>
+                        <input type="number" id="redeem-input" value="1" min="1" oninput="calcRedeem()">
+                        <p class="result">You Get: ₹<span id="redeem-value">30</span></p>
+                        <button class="btn-redeem" onclick="redeemCoins()">Cash Out</button>
+                    </div>
+                </div>
+            </div>
+            <div class="profit-note">
+                <p>Xchange Margin: ₹20 per coin. Funds platform sustainability & mentor bonuses.</p>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <h3>Team Hexathonn</h3>
+                <p>ABES Engineering College | 1st Year CSE</p>
+                <div class="team-names">
+                    <span>Krishna Kholiya</span> • 
+                    <span>Manik Mehra</span> • 
+                    <span>Krish Kumar</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
